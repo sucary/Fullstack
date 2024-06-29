@@ -24,12 +24,12 @@ const App = () => {
   const [selected, setSelected] = useState(0)
 
   const [count, setCount] = useState(() => {
-    const counts = {}
-    console.log(counts)
+    const votes = {}
+    console.log(votes)
     anecdotes.forEach(anecdote => {
-      counts[anecdote] = 0
+      votes[anecdote] = 0
     })
-    return counts
+    return votes
   })
 
   const maxVotesIndex = getMaxVotesIndex(count)
@@ -50,8 +50,8 @@ const App = () => {
     setSelected(updateSelected)
   }
 
-  const getMaxVotesIndex = (counts) => {
-    const voteArray = Object.values(counts)
+  const getMaxVotesIndex = (votes) => {
+    const voteArray = Object.values(votes)
     const maxVotes = Math.max(...voteArray)
     return voteArray.indexOf(maxVotes)
   }
