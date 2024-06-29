@@ -4,13 +4,13 @@ const Header = ({title}) =>{
   return <h1>{title}</h1>
 }
 
-const Button = ({ handleClick, text }) => (
-  <button onClick={handleClick}>
-    {text}
-  </button>
-
-  
-)
+const Button = (props) => {
+  return (
+    <button onClick={props.onClick}>
+      {props.text}
+    </button>
+  )
+}
 
 const Statistics = ({feedbacks}) => {
   const {good, neutral, bad} = feedbacks
@@ -22,14 +22,34 @@ const Statistics = ({feedbacks}) => {
     return <p>No feedback given</p>
   }
   return (
-    <>
-    <p>good {good}</p>
-    <p>neutral {neutral}</p>
-    <p>bad {bad}</p>
-    <p>total {total}</p>
-    <p>average {average}</p>
-    <p>positive {positive} %</p>
-    </>
+    <table>
+      <tbody>
+      <StatisticLine text = "good" value = {good} />
+      <StatisticLine text = "neutral" value = {neutral} />
+      <StatisticLine text = "bad" value = {bad} />
+      <StatisticLine text = "total" value = {total} />
+      <StatisticLine text = "average" value = {average} />
+      <StatisticLine text = "positive" value = {positive} />
+      </tbody>
+    </table>
+  )
+}
+
+const StatisticLine = (props) => {
+
+  if (props.text == "positive") {
+    return (
+      <tr>
+        <td>{props.text}</td>
+        <td>{props.value} %</td>
+      </tr>
+    )
+  }
+  return(  
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
@@ -44,17 +64,16 @@ const App = () => {
     const updateGood = good + 1
     setGood(updateGood)
   }
-
+  
   const handleNeutralClick = () => {
     const updateNeutral = neutral + 1
     setNeutral(updateNeutral)
   }
-
+  
   const handleBadClick = () => {
     const updateBad = bad + 1
     setBad(updateBad)
   }
-
 
 
 
@@ -63,9 +82,9 @@ const App = () => {
       
       <Header title = "give feedback" />
 
-      <Button handleClick = {handleGoodClick} text = "good" />
-      <Button handleClick = {handleNeutralClick} text = "neutral" />
-      <Button handleClick = {handleBadClick} text = "bad" />
+      <Button onClick = {handleGoodClick} text = "good" />
+      <Button onClick = {handleNeutralClick} text = "neutral" />
+      <Button onClick = {handleBadClick} text = "bad" />
       <Header title = "statistics" />
       <Statistics feedbacks = {{good, neutral, bad}} />
     </div>
