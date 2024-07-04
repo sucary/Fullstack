@@ -1,24 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Content from './components/Content';
 import Filter from './components/Filter';
 import Input from './components/Input';
+import axios from 'axios'
 
 const App = () => {
-
-  const initialPersons = 
-    [
-      { name: 'Arto Hellas', number: '040-123456', id: 1 },
-      { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-      { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-      { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-    ]
   
-  const [persons, setPersons] = useState(initialPersons)
+  const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
 
   const [filter, setFilter] = useState ('')
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+  
+  console.log('render', persons.length, 'persons')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -31,9 +36,14 @@ const App = () => {
       and only one number per person!`)
     }
     else{
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
+      axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+        console.log(response.data.name, "added to the phonebook")
+      })
     }
   }
 
