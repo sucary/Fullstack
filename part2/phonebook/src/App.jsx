@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Content from './components/Content';
 import Filter from './components/Filter';
 import Input from './components/Input';
+import personService from './services/persons'
 import axios from 'axios'
 
 const App = () => {
@@ -14,12 +15,11 @@ const App = () => {
   const [filter, setFilter] = useState ('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personService
+      .getAll()
+      .then(initialPersons => {
         console.log('promise fulfilled')
-        setPersons(response.data)
+        setPersons(initialPersons)
       })
   }, [])
   
@@ -35,15 +35,29 @@ const App = () => {
       alert(`${newName} is already added to phonebook, 
       and only one number per person!`)
     }
-    else{
-      axios
-      .post('http://localhost:3001/persons', personObject)
-      .then(response => {
-        setPersons(persons.concat(response.data))
+    else {
+      personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
-        console.log(response.data.name, "added to the phonebook")
+        console.log(personObject.name, "added to the phonebook")
       })
+    }
+  }
+
+  const deleteNumber = id => {
+    const person = persons.find(p => p.id === id)
+    console.log(`${person.name} with number ${person.number} needs to be deleted`)
+
+    if (window.confirm(`Confirm deleting ${person.name}?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          console.log(`${person.name} deleted successfully`)
+          setPersons(persons.filter(p => p.id !== id))
+        })
     }
   }
 
@@ -72,7 +86,7 @@ const App = () => {
       <h2>add a new</h2>
       <Input props = {{addPerson, newName, newNumber, handleNameChange, handleNumberChange}} />
       <h2>Numbers</h2>
-      <Content persons = {personsToShow} />
+      <Content persons = {personsToShow} deleteNumber = {deleteNumber} />
     </div>
   )
 }
