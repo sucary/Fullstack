@@ -32,9 +32,24 @@ const App = () => {
     const foundPerson = persons.find(person => person.name === newName);
 
     if (foundPerson){
-      alert(`${newName} is already added to phonebook, 
-      and only one number per person!`)
+
+      if (newNumber === foundPerson.number){
+        alert(`${newName} with number ${newNumber} already exists`)
+      }
+      else {
+        if (window.confirm(`Name ${newName} is already added to phonebook, 
+        replace the old number with a new one?`)) {
+          personService
+          .update(foundPerson.id, personObject)
+          .then(updatedPerson => {
+            setPersons(persons.map(p => p.id === foundPerson.id ? updatedPerson : p))
+            setNewName('')
+            setNewNumber('')
+          })
+        }
+      }
     }
+
     else {
       personService
       .create(personObject)
