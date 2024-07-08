@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import Content from './components/Content';
-import Filter from './components/Filter';
-import Input from './components/Input';
+import Content from './components/Content'
+import Filter from './components/Filter'
+import Input from './components/Input'
 import personService from './services/persons'
+import Notification from './components/Notification'
 import axios from 'axios'
 
 const App = () => {
@@ -13,6 +14,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   const [filter, setFilter] = useState ('')
+
+  const [notification, setNotification] = useState('')
 
   useEffect(() => {
     personService
@@ -29,13 +32,14 @@ const App = () => {
     event.preventDefault()
 
     const personObject = { name: newName, number: newNumber }
-    const foundPerson = persons.find(person => person.name === newName);
+    const foundPerson = persons.find(person => person.name === newName)
 
     if (foundPerson){
 
       if (newNumber === foundPerson.number){
         alert(`${newName} with number ${newNumber} already exists`)
       }
+
       else {
         if (window.confirm(`Name ${newName} is already added to phonebook, 
         replace the old number with a new one?`)) {
@@ -45,6 +49,28 @@ const App = () => {
             setPersons(persons.map(p => p.id === foundPerson.id ? updatedPerson : p))
             setNewName('')
             setNewNumber('')
+
+            console.log(`Number of ${personObject.name} is replaced with ${newNumber}`)
+            setNotification(
+              {
+                message: `Number of ${personObject.name} is replaced with ${newNumber}`,
+                type: 'add'
+              }
+            )
+            setTimeout(() => {
+              setNotification('')
+            }, 5000)
+          })
+          .catch(error => {
+            setNotification(
+              {
+                message: `Error updating ${newName}`,
+                type: 'error'
+              }
+            )
+            setTimeout(() => {
+              setNotification('')
+            }, 5000)
           })
         }
       }
@@ -57,7 +83,28 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+
         console.log(personObject.name, "added to the phonebook")
+        setNotification(
+          {
+            message: `${personObject.name} added to the phonebook`,
+            type: 'success'
+          }
+        )
+        setTimeout(() => {
+          setNotification('')
+        }, 5000)
+      })
+      .catch(error => {
+        setNotification(
+          {
+            message: `Error adding ${newName} to the phonebook`,
+            type: 'error'
+          }
+        )
+        setTimeout(() => {
+          setNotification('')
+        }, 5000)
       })
     }
   }
@@ -72,9 +119,29 @@ const App = () => {
         .then(() => {
           console.log(`${person.name} deleted successfully`)
           setPersons(persons.filter(p => p.id !== id))
+          setNotification(
+            {
+              message: `${person.name} deleted successfully`,
+              type: 'success'
+            }
+          )
+          setTimeout(() => {
+            setNotification('')
+          }, 5000)
         })
+        .catch(error => {
+          setNotification(
+            {
+              message: `Error deleting ${person.name}`,
+              type: 'error'
+            }
+          )
+          setTimeout(() => {
+            setNotification('')
+          }, 5000)
+        })
+      }
     }
-  }
 
   const personsToShow = filter === ''
     ? persons
@@ -97,6 +164,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message = {notification.message} type = {notification.type} />
+
       <Filter props = {{filter, handleFilterChange}} />
       <h2>add a new</h2>
       <Input props = {{addPerson, newName, newNumber, handleNameChange, handleNumberChange}} />
