@@ -21,7 +21,7 @@ const App = () => {
     personService
       .getAll()
       .then(initialPersons => {
-        console.log('promise fulfilled')
+        console.log('Fetching array: ', initialPersons)
         setPersons(initialPersons)
       })
   }, [])
@@ -95,13 +95,24 @@ const App = () => {
           setNotification('')
         }, 5000)
       })
+
       .catch(error => {
-        setNotification(
-          {
-            message: `Error adding ${newName} to the phonebook`,
+        console.log('Error response:', error.response)
+        console.log('Error data:', error.response.data)
+        console.log("The error is:", error.response.data.error)
+        if (error.response.data.error) {
+          setNotification({
+            message: error.response.data.error,
             type: 'error'
-          }
-        )
+          })
+        } else {
+          setNotification(
+            {
+              message: `Error adding ${newName} to the phonebook`,
+              type: 'error'
+            })
+        }
+
         setTimeout(() => {
           setNotification('')
         }, 5000)
@@ -146,7 +157,9 @@ const App = () => {
   const personsToShow = filter === ''
     ? persons
     : persons.filter(person => 
-      person.name.toLowerCase().includes(filter.toLowerCase()))
+      person.name.toLowerCase().includes(filter.toLowerCase())
+    )
+    
 
   const handleFilterChange = (event) => {
     console.log(event.target.value)
@@ -171,6 +184,7 @@ const App = () => {
       <h2>add a new</h2>
       <Input props = {{addPerson, newName, newNumber, handleNameChange, handleNumberChange}} />
       <h2>Numbers</h2>
+      
       <Content persons = {personsToShow} deleteNumber = {deleteNumber} />
     </div>
   )

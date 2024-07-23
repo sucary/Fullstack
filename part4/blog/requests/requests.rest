@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "The best english search engine has been found!",
+    "author": "Gary",
+    "url": "www.bing.com",
+    "likes": 2
+}
+
+#####
+
+GET http://localhost:3003/api/blogs/669f05605fb7115cdebb40b5
