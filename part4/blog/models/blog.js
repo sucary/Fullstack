@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
+const config = require('../utils/config')
 
-const mongoUrl = process.env.MONGODB_URI
 
 const blogSchema = new mongoose.Schema({
     title: String,
@@ -9,9 +9,9 @@ const blogSchema = new mongoose.Schema({
     likes: Number
 })
 
-console.log('connecting to', mongoUrl)
+console.log('connecting to', config.mongoUrl)
 
-mongoose.connect(mongoUrl)
+mongoose.connect(config.mongoUrl)
     .then(result => {
         console.log('connected to MongoDB')
     })
