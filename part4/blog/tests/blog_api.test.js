@@ -1,4 +1,4 @@
-const { test, after, beforeEach } = require('node:test')
+const { test, after, beforeEach, describe } = require('node:test')
 const Blog = require('../models/blog')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
@@ -102,6 +102,47 @@ test('blog without title or url is not added', async () => {
 
     const blogsAtEnd = await helper.blogsInDb()
     assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+})
+
+describe('deletion of a blog', () => {
+    test('succeeds with status code 204 if id is valid', async () => {
+        const blogsAtStart = await helper.blogsInDb()
+        const blogToDelete = blogsAtStart[0]
+
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`)
+            .expect(204)
+
+        const blogAtEnd = await helper.blogsInDb()
+
+        assert.strict(blogAtEnd.length, helper.initialBlogs.length - 1)
+
+        const title = blogAtEnd.map(b => b.content)
+        assert(!title.includes(blogToDelete.title))
+    })
+})
+
+test('the information of a blog can be updated', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[1]
+
+    const newBlog = {
+        title: 'Browser can execute only JavaScript',
+        author: 'Jarkko',
+        url: 'moodle.utu.fi',
+        likes: 0
+    }
+
+    await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const updatedBlog = blogsAtEnd.find(blog => blog.id === blogToUpdate.id)
+
+    assert.strictEqual(updatedBlog.likes, newBlog.likes)
 })
 
 after(async () => {
