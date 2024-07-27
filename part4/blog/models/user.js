@@ -1,13 +1,28 @@
 const mongoose = require('mongoose')
 
+// This validation applies to both username and password
+const validate = (number) => {
+    return number.length >= 3
+}
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: validate,
+            message: props => `${props.value} is not a valid username`
+        }
     },
     name: String,
-    passwordHash: String,
+    passwordHash: {
+        type: String,
+        validate: {
+            validator: validate,
+            message: props => `${props.value} is not a valid password`
+        }
+    }
 })
 
 userSchema.set('toJSON', {

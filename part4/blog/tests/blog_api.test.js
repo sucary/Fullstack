@@ -202,6 +202,32 @@ describe('when there is initially one user in db', () => {
     })
 })
 
+describe('username and password validation', () => {
+
+    test('validation failed if username is less than 3 characters', async () => {
+        const usersAtStart = await helper.usersInDb()
+        const newUser = {
+            username: 'ro',
+            name: 'Superuser',
+            password: 'salainen',
+        }
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        assert.strictEqual(
+            result.body.error.includes(`${newUser.username} is not a valid username`),
+            true
+        )
+        
+        const usersAtEnd = await helper.usersInDb()
+        assert.strictEqual(usersAtEnd.length, usersAtStart.length)
+
+    })
+})
+
 after(async () => {
     await mongoose.connection.close()
 })
