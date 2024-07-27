@@ -3,11 +3,10 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "I love Paris!",
-    "author": "Gary",
-    "url": "www.paris.fr",
-    "likes": 10,
-    "userId": "66a5312f2a81c3e07fe556f6"
+    "title": "I love Crimea!",
+    "url": "https://mid.ru/en/maps/ru/ru-krm/",
+    "likes": 10
+
 }
 
 #####
