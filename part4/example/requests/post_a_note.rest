@@ -4,12 +4,14 @@ GET http://localhost:3001/api/notes/
 
 POST http://localhost:3001/api/notes 
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY2YTI5YTY4MzNiMDkwNDU0ODAyM2FiNyIsImlhdCI6MTcyMjA5NDk3Nn0.0fOIHap3p-ekxNH0PW6oZF7Xlz6Up_6MrrSxT7FQrjc
 
 // Before Content-Type: application/json: No EMPTY LINE; 
 // after: ONE EMPTY line
 {
-"content": "rest client is not a handy tool", 
-"important": true
+"content": "I love Paris", 
+"important": true,
+"userId": "66a29a6833b0904548023ab7"
 }
 
 ### 

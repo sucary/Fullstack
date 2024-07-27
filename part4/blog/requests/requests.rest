@@ -1,3 +1,4 @@
+// Post a blog
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
@@ -9,5 +10,20 @@ Content-Type: application/json
 }
 
 #####
+// Post a user
+POST http://localhost:3003/api/users
+Content-Type: application/json
 
+{
+    "username": "putin107",
+    "name": "putin",
+    "password": "crimea"
+}
+
+#####
+// Get a blog
 GET http://localhost:3003/api/blogs/669f05605fb7115cdebb40b5
+
+#####
+// Get all users
+Get http://localhost:3003/api/users
