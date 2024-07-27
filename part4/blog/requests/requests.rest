@@ -3,10 +3,11 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "The best english search engine has been found!",
+    "title": "I love Paris!",
     "author": "Gary",
-    "url": "www.bing.com",
-    "likes": 2
+    "url": "www.paris.fr",
+    "likes": 10,
+    "userId": "66a5312f2a81c3e07fe556f6"
 }
 
 #####
@@ -15,15 +16,26 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-    "username": "putin107",
-    "name": "putin",
+    "username": "zelenskyi0125",
+    "name": "zelenskyi",
     "password": "crimea"
 }
 
 #####
 // Get a blog
-GET http://localhost:3003/api/blogs/669f05605fb7115cdebb40b5
+GET http://localhost:3003/api/blogs/66a5362b833b78be32dbe630
+
+#####
+// Get all blogs
+GET http://localhost:3003/api/blogs/
 
 #####
 // Get all users
 Get http://localhost:3003/api/users
+
+
+
+
+#####
+// Delete a blog
+Delete http://localhost:3003/api/blogs/66a53555d3eb73678ef55b74

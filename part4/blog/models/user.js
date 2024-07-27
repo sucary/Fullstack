@@ -22,7 +22,13 @@ const userSchema = new mongoose.Schema({
             validator: validate,
             message: props => `${props.value} is not a valid password`
         }
-    }
+    },
+    blogs: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Blog'
+        }
+    ]
 })
 
 userSchema.set('toJSON', {
