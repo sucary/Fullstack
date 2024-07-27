@@ -1,6 +1,7 @@
 // Post a blog
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InB1dGluMTA3IiwiaWQiOiI2NmE1MmE1MTJkNTlmZmE1ZmY0OWNjZjgiLCJpYXQiOjE3MjIxMDg1NDIsImV4cCI6MTcyMjEwODg0Mn0.t6MT9wtSd1dsdcvfs4yy4o_0PFcz4GCJEXxefDbcb5c
 
 {
     "title": "I love Crimea!",
@@ -32,7 +33,14 @@ GET http://localhost:3003/api/blogs/
 // Get all users
 Get http://localhost:3003/api/users
 
+#####
+POST http://localhost:3003/api/login
+Content-Type: application/json
 
+{
+    "username": "putin107",
+    "password": "crimea"
+}
 
 
 #####
