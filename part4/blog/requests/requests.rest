@@ -1,13 +1,12 @@
 // Post a blog
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InB1dGluMTA3IiwiaWQiOiI2NmE1MmE1MTJkNTlmZmE1ZmY0OWNjZjgiLCJpYXQiOjE3MjIxMDg1NDIsImV4cCI6MTcyMjEwODg0Mn0.t6MT9wtSd1dsdcvfs4yy4o_0PFcz4GCJEXxefDbcb5c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InB1dGluMTA3IiwiaWQiOiI2NmE1MmE1MTJkNTlmZmE1ZmY0OWNjZjgiLCJpYXQiOjE3MjIxMTA0NTIsImV4cCI6MTcyMjExNDA1Mn0.B_snFiOjDl0zV8_SNcNj1ybrS7H4qkeiS4KIAW7bFEA
 
 {
     "title": "I love Crimea!",
     "url": "https://mid.ru/en/maps/ru/ru-krm/",
     "likes": 10
-
 }
 
 #####
@@ -38,11 +37,11 @@ POST http://localhost:3003/api/login
 Content-Type: application/json
 
 {
-    "username": "putin107",
+    "username": "zelenskyi0125",
     "password": "crimea"
 }
 
 
 #####
 // Delete a blog
-Delete http://localhost:3003/api/blogs/66a53555d3eb73678ef55b74
+Delete http://localhost:3003/api/blogs/66a551fddec2f62ea54795d0
