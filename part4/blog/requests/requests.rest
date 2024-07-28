@@ -41,7 +41,8 @@ Content-Type: application/json
     "password": "crimea"
 }
 
-
 #####
 // Delete a blog
-Delete http://localhost:3003/api/blogs/66a551fddec2f62ea54795d0
+Delete http://localhost:3003/api/blogs/66a558f659bb5280cd2f4ae5
+
+
