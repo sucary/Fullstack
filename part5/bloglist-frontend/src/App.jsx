@@ -250,7 +250,7 @@ const App = () => {
         </Togglable>
         
         </div>
-        } 
+        }
         {blogs.map(blog => (
           <Blog 
             key={blog.id} 
