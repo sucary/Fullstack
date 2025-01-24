@@ -25,7 +25,6 @@ const errorMiddleware = (error: unknown, _req: Request, res: Response, next: Nex
   }
 };
 
-
 router.get('/', (_req, res) => {
 
   res.send(diaryService.getNonSensitiveEntries());
