@@ -11,8 +11,17 @@ export const getAllDiaries = () => {
 
 
 
-export const createEntry = (object: NewEntry) => {
-  return axios
-    .post<DiaryEntry>(baseUrl, object)
-    .then(response => response.data)
+export const createEntry = async (object: NewEntry) => {
+  try {
+    const response = await axios
+    .post<DiaryEntry>(baseUrl, object);
+  return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("An unexpected axios error has orrured: ", error.status);
+      console.error(error.response);
+    } else {
+    console.error("Non-axios error has occured: ", error);
+    }
+  }
 }

@@ -12,7 +12,7 @@ interface InputProps {
   setNewComment: (value: string) => void;
 }
 
-const Input = ({   
+const Input = ({  
 	addEntry,
   newDate,
   newWeather,
