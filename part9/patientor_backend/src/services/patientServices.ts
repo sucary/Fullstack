@@ -1,8 +1,10 @@
-import patientData from "../../data/patients";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+//import patientData from "../../data/patients";
 import { Patient, NewPatient } from "../types";
 import { v1 as uuid } from 'uuid';
+import patientWithoutId from "../../data/patient_full";
 
-const patients: Patient[] = patientData as Patient[];
+const patients: Patient[] = patientWithoutId;
 
 const getPatients = (): Patient[] => {
     return patients.map(({ id, name, dateOfBirth, ssn, gender, occupation, entries }) => ({
